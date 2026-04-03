@@ -1,3 +1,4 @@
+import React from "react";
 export function Sidebar({conversations,select,create}){
   return (
     <div className="w-64 bg-black text-white p-3">
