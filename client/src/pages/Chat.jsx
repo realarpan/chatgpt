@@ -28,38 +28,36 @@ export default function Chat() {
   };
 
   return (
-    <div className="h-screen flex flex-col bg-gray-100">
-      {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-4">
-        {messages.map((msg, i) => (
-          <div
-            key={i}
-            className={`mb-2 p-2 rounded max-w-xl ${
-              msg.role === "user"
-                ? "bg-blue-500 text-white ml-auto"
-                : "bg-white"
-            }`}
-          >
-            {msg.content}
-          </div>
-        ))}
-      </div>
-
-      {/* Input */}
-      <div className="p-4 flex gap-2 bg-white">
-        <input
-          className="flex-1 border p-2 rounded"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Type your message..."
-        />
-        <button
-          onClick={sendMessage}
-          className="bg-blue-500 text-white px-4 rounded"
+  <div className="h-screen flex flex-col bg-[#343541] text-white">
+    <div className="flex-1 overflow-y-auto p-6 space-y-4">
+      {messages.map((msg, i) => (
+        <div
+          key={i}
+          className={`p-3 rounded-lg max-w-2xl ${
+            msg.role === "user"
+              ? "bg-blue-600 ml-auto"
+              : "bg-[#444654]"
+          }`}
         >
-          Send
-        </button>
-      </div>
+          {msg.content}
+        </div>
+      ))}
     </div>
-  );
+
+    <div className="p-4 bg-[#40414f] flex gap-2">
+      <input
+        className="flex-1 p-3 rounded bg-[#343541] border border-gray-600"
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        placeholder="Ask anything..."
+      />
+      <button
+        onClick={sendMessage}
+        className="bg-green-500 px-5 rounded"
+      >
+        Send
+      </button>
+    </div>
+  </div>
+);
 }
