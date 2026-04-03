@@ -6,26 +6,33 @@ export default function Chat() {
   const [messages, setMessages] = useState([]);
 
   const sendMessage = async () => {
-    if (!input) return;
+  if (!input.trim()) return;
 
-    // add user message
-    const newMessages = [...messages, { role: "user", content: input }];
-    setMessages(newMessages);
+  const newMessages = [...messages, { role: "user", content: input }];
+  setMessages(newMessages);
 
-    try {
-      const res = await API.post("/chat", { message: input });
+  try {
+    const res = await API.post("/chat", { message: input });
 
-      setMessages([
-        ...newMessages,
-        { role: "assistant", content: res.data.reply },
-      ]);
-    } catch (err) {
-      console.error(err);
-      alert("Error getting response");
+    if (!res.data || !res.data.reply) {
+      throw new Error("Invalid response");
     }
 
-    setInput("");
-  };
+    setMessages([
+      ...newMessages,
+      { role: "assistant", content: res.data.reply },
+    ]);
+  } catch (err) {
+    console.error(err);
+
+    setMessages([
+      ...newMessages,
+      { role: "assistant", content: "⚠️ Error getting response" },
+    ]);
+  }
+
+  setInput("");
+};
 
   return (
   <div className="h-screen flex flex-col bg-[#343541] text-white">
